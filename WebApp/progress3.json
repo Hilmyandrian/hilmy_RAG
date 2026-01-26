@@ -1,0 +1,134 @@
+{
+  "name": "progress3",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webapp",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": false
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        0
+      ],
+      "id": "eba9a585-f527-4f96-b969-2da0462dc069",
+      "name": "Webhook",
+      "webhookId": "e1b6b53d-7a60-43a9-a4dc-dbc9cfadfc83"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.question }}",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "Lu adalah asisten AI yang pinter tapi gaya bahasa lu kayak temen kuliah yang asik, santai, dan pakai bahasa gaul Jakarta (pake kata 'gue', 'lu'). Jawab pertanyaan berikut secara singkat, jelas, dan nggak kaku: {{ $json.body.question }}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "f3e810c7-e9f1-40ba-aebc-4131b2e447e9",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        192
+      ],
+      "id": "d0115a72-5a52-4061-ade7-b5c86258c0da",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "mkZoxJCD26fJhFya",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"response\": \"{{ $json.text }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        736,
+        0
+      ],
+      "id": "a4f9f3ed-3617-449e-b5fd-803321cb2edf",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cabbc2b1-72db-4ae5-b4f1-d395e1182dfa",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c526b0b63ecc1201b92b12bfe211a596f4829d5614b1cf40d894eeb684f088b4"
+  },
+  "id": "FSDulrdKBhuGNc10",
+  "tags": []
+}
