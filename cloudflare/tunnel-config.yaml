@@ -1,0 +1,14 @@
+tunnel: n8n-hilmy
+credentials-file: C:\Users\ACER\.cloudflared\c69c531b-ded0-438d-9d52-1a884686b8b2.json
+
+ingress:
+  # Routing untuk n8n dashboard
+  - hostname: n8n.dexquins.my.id
+    service: http://localhost:5678
+
+  # Routing untuk webhook endpoint
+  - hostname: webhook.dexquins.my.id
+    service: http://localhost:5678
+
+  # Catch-all rule (jika akses ke subdomain lain, kirim 404)
+  - service: http_status:404
