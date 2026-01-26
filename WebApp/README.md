@@ -1,41 +1,45 @@
-# 🤖 WebApp: RAG Chatbot Interface
+# 🤖 WebApp: RAG Chatbot Interface - Official Documentation
 
-Halaman ini merupakan **Frontend Interface** dari sistem Chatbot berbasis **Retrieval-Augmented Generation (RAG)**. Web ini dirancang untuk memberikan pengalaman interaksi yang *seamless* antara pengguna dengan sistem AI yang dikelola melalui **n8n**.
+Repository ini berisi antarmuka pengguna (Frontend) untuk sistem AI Chatbot berbasis **Retrieval-Augmented Generation (RAG)**. Proyek ini mengintegrasikan desain web modern dengan workflow otomatisasi n8n untuk memberikan jawaban yang akurat berdasarkan basis data dokumen.
+
+---
 
 ## 📑 Daftar Isi
-- [Gambaran Umum](#-gambaran-umum)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
-- [Struktur Folder](#-struktur-folder)
-- [Konfigurasi & Instalasi](#-konfigurasi--instalasi)
-- [Cara Kerja Sistem](#-cara-kerja-sistem)
+1. [Gambaran Umum](#-gambaran-umum)
+2. [Fitur Utama](#-fitur-utama)
+3. [Tech Stack](#-tech-stack)
+4. [Struktur File](#-struktur-file)
+5. [Panduan Instalasi & Konfigurasi](#-panduan-instalasi--konfigurasi)
+6. [Cara Menjalankan (Penting)](#-cara-menjalankan-penting)
+7. [Alur Kerja Sistem (Workflow)](#-alur-kerja-sistem-workflow)
+
+---
 
 ## 🌟 Gambaran Umum
-Proyek ini mengimplementasikan teknik RAG untuk memastikan AI tidak hanya menjawab berdasarkan data umum, tetapi juga merujuk pada dokumen spesifik yang telah di-upload ke dalam database vector di n8n. Antarmuka web dibuat responsif agar nyaman digunakan di perangkat apa pun.
+Berbeda dengan chatbot biasa, sistem ini menggunakan teknik **RAG**. Saat user bertanya, sistem tidak langsung menjawab, melainkan mencari referensi dari dokumen yang relevan terlebih dahulu di dalam vector database, lalu memberikan jawaban yang lebih akurat dan terkonteks melalui LLM (OpenAI).
 
-## 🛠️ Teknologi yang Digunakan
-- **Frontend**: HTML5, CSS3 (Custom UI), JavaScript (Fetch API).
-- **Backend Orchestrator**: [n8n](https://n8n.io/) sebagai pengelola workflow.
-- **AI Brain**: OpenAI GPT Models.
-- **Tunneling**: Ngrok (untuk menghubungkan localhost n8n ke publik).
+## 🚀 Fitur Utama
+- **Real-time Interaction**: Chat langsung dibalas tanpa refresh halaman.
+- **Modern UI**: Dark mode interface yang bersih dan responsif.
+- **Context-Aware**: Jawaban AI didasarkan pada dokumen yang di-upload ke n8n.
+- **Natural Language**: Gaya bahasa disesuaikan menjadi santai (Gue/Lu) layaknya teman kuliah.
 
-## 📂 Struktur Folder
-Di dalam direktori ini terdapat file-file utama:
-* `index.html`: Berisi struktur UI chat, styling CSS (dark mode), dan logika JavaScript untuk mengirim/menerima pesan dari API.
-* `progress3.json`: File export workflow n8n yang digunakan pada tahap pengembangan ketiga.
-* `README.md`: Dokumentasi teknis folder WebApp.
+## 🛠️ Tech Stack
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla - Fetch API).
+- **Orchestrator**: [n8n.io](https://n8n.io/).
+- **AI Model**: OpenAI GPT-4o / GPT-3.5.
+- **Tunneling**: Ngrok (Localhost to Public).
 
-## ⚙️ Konfigurasi & Instalasi
+## 📂 Struktur File
+* `index.html`: File tunggal yang berisi struktur HTML, styling CSS, dan logika JavaScript.
+* `progress3.json`: Backup workflow n8n yang bisa di-import langsung.
+* `README.md`: Dokumentasi lengkap proyek (file ini).
 
-### 1. Update Endpoint API
-Buka file `index.html` dan cari bagian script JavaScript. Pastikan variabel `webhookUrl` mengarah ke URL Ngrok yang sedang aktif:
+---
+
+## ⚙️ Panduan Instalasi & Konfigurasi
+
+### 1. Persiapan Endpoint
+Pastikan **n8n** dan **Ngrok** sudah berjalan. Buka `index.html` dan perbarui variabel `webhookUrl` dengan URL Ngrok kamu yang sedang aktif:
 ```javascript
 const webhookUrl = '[https://mercurially-pneumatologic-louetta.ngrok-free.dev/webhook-test/webapp](https://mercurially-pneumatologic-louetta.ngrok-free.dev/webhook-test/webapp)';
-
-### 2. Cara Menjalankan (PENTING)
-Untuk menghindari masalah kebijakan keamanan browser (CORS) dan memastikan fitur chat berjalan lancar, **jangan langsung klik dua kali pada file `index.html`**. 
-
-Gunakan ekstensi **Live Server** di VS Code atau web server lokal lainnya:
-1. Buka folder `WebApp` di Visual Studio Code.
-2. Klik kanan pada file `index.html`.
-3. Pilih **"Open with Live Server"**.
-4. Web akan terbuka di `http://127.0.0.1:5500`, dan chat bisa digunakan secara normal.
